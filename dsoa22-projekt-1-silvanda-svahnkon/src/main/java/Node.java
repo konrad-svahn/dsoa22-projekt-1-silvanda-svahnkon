@@ -59,23 +59,13 @@ public class Node {
     }
     public double calculateG(Node startNode){    // räknar Längen till startnoden
         double G = 0;
-        //Node current = this.Node; 
-        
-        
+        Node current = this; 
+        while(current != startNode){
+            G += Utils.getDistance(current.getLatitude(), current.getLongitude(), current.previous.getLatitude(), current.previous.getLongitude());
+            current = current.previous;
+        }
         return G;
-/*
-  · Skapa en Node-variabel current och sätt till innevarande objekt av Node (this)   
 
-    Loopa (så länge som current inte är samma som startNode) {
-        · Beräkna avståndet från current till föregående nod (current.previous).
-        · Addera avståndet till G.
-        · Sätt current att vara samma som current.previous.
-    }
-    returnera G
-    beräkna och returnera G-värdet dvs. i detta fall den verkliga distansen från startnoden startNode till
-    innevarande nod via alla eventuella mellannoder. 
-    Definiera i detta skede även en instansmetod getF som returnerar F-värdet, dvs. G + H.
-    Observera att denna metod inte kan göra sitt jobb på riktigt innan den används i själva algoritmen och noderna får riktiga värden för previous.*/
     }
 
 }
