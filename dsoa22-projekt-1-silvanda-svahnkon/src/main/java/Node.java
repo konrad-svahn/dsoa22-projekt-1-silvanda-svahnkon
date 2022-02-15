@@ -16,7 +16,6 @@ public class Node {
         this.neighbours = new ArrayList<Node>();
     }
 
-    
     public ArrayList<Node> getNeighbours() {
         return neighbours;
     }
@@ -57,6 +56,7 @@ public class Node {
        double heuristicDistance = Utils.getDistance(this.latitude,this.longitude,endNode.getLatitude(),endNode.getLongitude() );
         return heuristicDistance;
     }
+
     public double calculateG(Node startNode){    // räknar Längen till startnoden
         double G = 0;
         Node current = this; 
@@ -66,6 +66,14 @@ public class Node {
         }
         return G;
 
+    }
+
+    public Node getPrevious() {
+        return previous;
+    }
+
+    public void setPrevious(Node previous) {
+        this.previous = previous;
     }
 
 }

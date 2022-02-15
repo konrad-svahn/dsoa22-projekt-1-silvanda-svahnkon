@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Utils {
 
     /**
@@ -25,5 +27,89 @@ public class Utils {
         // returnera resultatet i km
         return(c * r);
 
+    }
+
+    public static ArrayList<Node> getRoute (Node startNode, Node endNode) {
+        Node current = startNode;
+        boolean done = false;   
+        boolean inVisited;
+        boolean inCand;
+        ArrayList<Node> cand = new ArrayList<Node>();
+        ArrayList<Node> visited = new ArrayList<Node>();
+        ArrayList<Node> rute = new ArrayList<Node>();
+
+       
+        mainLoop: while (done == false) {
+            Node smallest = null;
+            double minF = 0;
+            System.out.println(1+" new loop " + current.getName());
+
+            for (int i = 0; i < current.getNeighbours().size(); i++) {
+                System.out.println(2);
+
+                inVisited = false;
+                for (int j = 0; j < visited.size(); j++) {
+                    System.out.println(3);
+
+                    if (current.getNeighbours().get(i) == visited.get(j)) {
+                        System.out.println(4);
+                        inVisited = true;    
+                    }
+                }
+
+                inCand = false;
+                for (int k = 0; k < cand.size(); k++) {
+                    System.out.println(5);
+
+                    if (current.getNeighbours().get(i) == cand.get(k)) {
+                        System.out.println(6);
+                        inCand = true;  
+                    }
+                }
+
+                if (inVisited == false && inCand == false) {
+                    cand.add(current.getNeighbours().get(i));
+                    System.out.println(cand.get(i).getName());
+                    current.getNeighbours().get(i).setPrevious(current);
+                }
+                
+            }
+
+            System.out.println(7);
+            for (int i = 0; i < cand.size(); i++) {
+                System.out.println(8);
+                if (cand.get(i) == endNode) {
+                    System.out.println(9);
+                    endNode.setPrevious(current);
+                    done = true;
+                    break mainLoop;
+                } else {
+                    System.out.println(10);
+                    double f = cand.get(i).getF(cand.get(i).calculateG(startNode), cand.get(i).calculateH(endNode)); 
+                    if (minF == 0 || minF > f) {
+                        System.out.println(11);
+                        smallest = cand.get(i);
+                    }
+                    for (int j = 0; j < current.getNeighbours().size(); j++) {
+                        System.out.println(12);
+                        if (current.getNeighbours().get(j) == smallest) {
+                            System.out.println(13);
+                            smallest.setPrevious(current);
+                        }  
+                    }
+                }
+            }
+            visited.add(current);
+            cand.remove(current);
+            current = smallest;
+        }
+        current = endNode;
+
+        while (current != startNode) {
+            rute.add(current);
+            current = current.getPrevious();
+        }
+        rute.add(startNode);
+        return rute;
     }
 }
