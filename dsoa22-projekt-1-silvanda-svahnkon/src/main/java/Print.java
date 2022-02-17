@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Scanner;
 
-import javax.rmi.CORBA.Util;
 public class Print {
     // print innehåller alla metoder som gör utskrifter
 
@@ -17,7 +16,7 @@ public class Print {
                 System.out.print("["+neighbour.getKey()+"] ");
             }
             System.out.println();
-        });  
+        }); /* 
         try (Scanner scan = new Scanner(System.in)) {
             System.out.println("\nSkriv in start och destination: ");
             System.out.println("Start: ");
@@ -25,9 +24,24 @@ public class Print {
             System.out.println("Destination: ");
             String end = scan.nextLine();
             Utils.getRoute(nodes.get(start), nodes.get(end));
-        }
-        
+        }*/
+    }
 
+    public static String[] userInput (LinkedHashMap<String,Node> nodes) {
+        String[] inputs = new String[2];
+        try (Scanner scan = new Scanner(System.in)) {
+            System.out.println("\nSkriv in start och destination: ");
+
+            System.out.println("Start: ");
+            inputs[0] = Utils.testUserInput(scan, nodes);
+
+            System.out.println("Destination: ");
+            inputs[1] = Utils.testUserInput(scan, nodes);
+
+            System.out.println();
+
+            return inputs;
+        }
     }
     
 
@@ -35,6 +49,10 @@ public class Print {
         for (Node node : route) {
 			System.out.println( node.getName());
 		}
+    }
+
+    public static void warning() {
+        System.out.println("var vändlig och skriv in en key som fins på listan åvan");
     }
 
 }

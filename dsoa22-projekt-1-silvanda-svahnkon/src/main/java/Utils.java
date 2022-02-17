@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Scanner;
 
 public class Utils {
 
@@ -43,10 +45,7 @@ public class Utils {
         mainLoop: while (done == false) {
             Node smallest = null;
             double minF = 0;
-            System.out.println();
-            System.out.println("new loop " + current.getName());
-            System.out.println();
-
+            
             for (int i = 0; i < current.getNeighbours().size(); i++) {
 
                 inVisited = false;
@@ -65,7 +64,6 @@ public class Utils {
 
                 if (inVisited == false && inCand == false) {
                     cand.add(current.getNeighbours().get(i));
-                    //System.out.println("added: "+current.getNeighbours().get(i).getName()+" to candidates");
                     current.getNeighbours().get(i).setPrevious(current);
                 }
                 
@@ -79,6 +77,7 @@ public class Utils {
                 } else {
                     double f = cand.get(i).getF(cand.get(i).calculateG(startNode), cand.get(i).calculateH(endNode)); 
                     if (minF == 0 || minF > f) {
+                        minF = f;
                         smallest = cand.get(i);
                     }
                     for (int j = 0; j < current.getNeighbours().size(); j++) {
@@ -106,4 +105,31 @@ public class Utils {
 
         return finalRute;
     }
+
+    public static String testUserInput (Scanner scanAction, LinkedHashMap<String,Node> nodes) {  
+        boolean warning = false; 
+        while (true){
+            if (warning){Print.warning();}
+            warning = true;
+            if (scanAction.hasNext()){String input = scanAction.nextLine();
+                if (isValid(input, nodes)) {
+                    return input;
+                }
+            }
+        }
+    }
+
+    private static boolean isValid (String input, LinkedHashMap<String,Node> nodes){
+        boolean valid = false;
+        ArrayList<String> tags = new ArrayList<String>();
+        // av någon orsak får jag en: Local variable valid defined in an enclosing scope must be final or effectively final. om jag försöker sätta if satsen inuti nodes.forEach
+        // så istälet flytar jag alla keys til en array list och testar sedan den listan
+        nodes.forEach ((key,V) -> {
+             tags.add(key);
+        });  
+        for (String tag : tags) {
+            if (input.matches(tag)) { valid = true;}
+        }
+        return valid;
+    } 
 }
