@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
 public class Print {
@@ -15,6 +16,12 @@ public class Print {
             }
             System.out.println();
         });  
+    }
+
+    public static void path (ArrayList<Node> route) {
+        for (Node node : route) {
+			System.out.println( node.getName());
+		}
     }
 
 }

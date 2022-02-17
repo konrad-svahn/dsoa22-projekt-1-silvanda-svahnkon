@@ -15,9 +15,7 @@ public class Main {
 		LinkedHashMap<String,Node> nodes = GraphData.createGraph();
 		Print.listNodesAndLinks(nodes);
 		ArrayList<Node> route = Utils.getRoute(nodes.get("lill"), nodes.get("bush"));
-		for (Node node : route) {
-			System.out.println( node.getName());
-		}
+		Print.path(route);
 		
 	}
 

@@ -34,6 +34,7 @@ public class Utils {
         boolean done = false;   
         boolean inVisited;
         boolean inCand;
+        ArrayList<Node> finalRute = new ArrayList<Node>();
         ArrayList<Node> cand = new ArrayList<Node>();
         ArrayList<Node> visited = new ArrayList<Node>();
         ArrayList<Node> rute = new ArrayList<Node>();
@@ -64,7 +65,7 @@ public class Utils {
 
                 if (inVisited == false && inCand == false) {
                     cand.add(current.getNeighbours().get(i));
-                    System.out.println("added: "+cand.get(i).getName()+" to candidates");
+                    //System.out.println("added: "+current.getNeighbours().get(i).getName()+" to candidates");
                     current.getNeighbours().get(i).setPrevious(current);
                 }
                 
@@ -98,6 +99,11 @@ public class Utils {
             current = current.getPrevious();
         }
         rute.add(startNode);
-        return rute;
+        
+        for (int i = rute.size() -1; i >= 0 ; i--) {
+            finalRute.add(rute.get(i));
+        }
+
+        return finalRute;
     }
 }
