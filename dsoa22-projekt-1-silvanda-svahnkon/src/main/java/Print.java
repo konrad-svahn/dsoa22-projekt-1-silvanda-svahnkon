@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Print {
     // print innehåller alla metoder som gör utskrifter
 
-    
     public static void listNodesAndLinks (LinkedHashMap<String,Node> nodes) {
         System.out.println("Listan över bibloteken och deras grannar:");
         nodes.forEach ((key,V) -> {
@@ -16,17 +15,10 @@ public class Print {
                 System.out.print("["+neighbour.getKey()+"] ");
             }
             System.out.println();
-        }); /* 
-        try (Scanner scan = new Scanner(System.in)) {
-            System.out.println("\nSkriv in start och destination: ");
-            System.out.println("Start: ");
-            String start = scan.nextLine();
-            System.out.println("Destination: ");
-            String end = scan.nextLine();
-            Utils.getRoute(nodes.get(start), nodes.get(end));
-        }*/
+        });
     }
 
+    //skriver ut promts för user input och kallar på funktionerna so utför behandling av inputs
     public static String[] userInput (LinkedHashMap<String,Node> nodes) {
         String[] inputs = new String[2];
         try (Scanner scan = new Scanner(System.in)) {
@@ -43,7 +35,6 @@ public class Print {
             return inputs;
         }
     }
-    
 
     public static void path (ArrayList<Node> route) {
         for (Node node : route) {
@@ -54,5 +45,4 @@ public class Print {
     public static void warning() {
         System.out.println("var vändlig och skriv in en key som fins på listan åvan");
     }
-
 }

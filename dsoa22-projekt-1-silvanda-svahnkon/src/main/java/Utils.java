@@ -43,9 +43,10 @@ public class Utils {
 
        
         mainLoop: while (done == false) {
-            Node smallest = null;
+            Node next = null;
             double minF = 0;
             
+            //lägger till i candidat listan alla noder som är granar till den nuvarande noden men inte redan är i kandidat listan eller stängda
             for (int i = 0; i < current.getNeighbours().size(); i++) {
 
                 inVisited = false;
@@ -69,6 +70,7 @@ public class Utils {
                 
             }
 
+            //går igenom alla kandidater och hittar den med lägst f värde
             for (int i = 0; i < cand.size(); i++) {
                 if (cand.get(i) == endNode) {
                     endNode.setPrevious(current);
@@ -78,27 +80,31 @@ public class Utils {
                     double f = cand.get(i).getF(cand.get(i).calculateG(startNode), cand.get(i).calculateH(endNode)); 
                     if (minF == 0 || minF > f) {
                         minF = f;
-                        smallest = cand.get(i);
+                        next = cand.get(i);
                     }
+                    // om en kandidat nod är granne til den nuvarade noden blir den nuvarande noden föregående hos grannen
                     for (int j = 0; j < current.getNeighbours().size(); j++) {
-                        if (current.getNeighbours().get(j) == smallest) {
-                            smallest.setPrevious(current);
+                        if (current.getNeighbours().get(j) == cand.get(i)) {
+                            cand.get(i).setPrevious(current);
                         }  
                     }
                 }
             }
+
+            //städar bort en undersökt nod och byter till den nod med lägst f värde
             visited.add(current);
             cand.remove(current);
-            current = smallest;
+            current = next;
         }
+        // startar från den sista noden och skapar en rutt
         current = endNode;
-
         while (current != startNode) {
             rute.add(current);
             current = current.getPrevious();
         }
         rute.add(startNode);
-        
+
+        // vänder på rutten så att vi börjar från start noden istälet för slut noden 
         for (int i = rute.size() -1; i >= 0 ; i--) {
             finalRute.add(rute.get(i));
         }
@@ -106,6 +112,7 @@ public class Utils {
         return finalRute;
     }
 
+    //ser till at användaren måst skriva in ett koreckt värde då de skriver in noderna  
     public static String testUserInput (Scanner scanAction, LinkedHashMap<String,Node> nodes) {  
         boolean warning = false; 
         while (true){
@@ -119,6 +126,7 @@ public class Utils {
         }
     }
 
+    // tar emot en text sträng och returnerar true om den machar en nyckel i nodes
     private static boolean isValid (String input, LinkedHashMap<String,Node> nodes){
         boolean valid = false;
         ArrayList<String> tags = new ArrayList<String>();

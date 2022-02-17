@@ -17,8 +17,6 @@ public class Main {
 		String[] statAndStop = Print.userInput(nodes);
 		ArrayList<Node> route = Utils.getRoute(nodes.get(statAndStop[0]), nodes.get(statAndStop[1]));
 		Print.path(route);
-		
 	}
-
 }
 
